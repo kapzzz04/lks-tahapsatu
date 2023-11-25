@@ -17,17 +17,12 @@ const btn = document.querySelector(".btnM");
 const frm = document.querySelector("form");
 
 btn.addEventListener("click", async function (e) {
-  const data = await fetchL();
-  const seleksi = await menyeleksiUser(data.values);
-  console.log(seleksi);
-  if (!seleksi) {
-    alert("Invalid Username or Password");
+  try {
     e.preventDefault();
-  } else {
-    alert("berhasil login");
-    frm.setAttribute("action", "/index");
-    frm.submit(); // Kirim formulir secara programatik
-    return false;
+    const seleksi = await fetchL();
+    menyeleksiUser(seleksi);
+  } catch (err) {
+    alert(err);
   }
 });
 
@@ -35,7 +30,7 @@ function fetchL() {
   return fetch("http://localhost:3000/semuauser")
     .then((res) => res.json())
     .then((data) => {
-      return data;
+      return data.values;
     });
 }
 
@@ -45,9 +40,10 @@ function menyeleksiUser(e) {
       element.username === username.value &&
       element.password === password.value
     ) {
-      console.log("hallo");
-      return true; // Username sudah ada, hentikan pemrosesan
+      frm.setAttribute("action", "/index");
+      frm.submit();
+      return false;
     }
   }
-  return false;
+  alert("Invalid username or password");
 }

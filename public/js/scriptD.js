@@ -21,31 +21,38 @@ const inputL = document.querySelector(".input-L");
 const frm = document.querySelector("form");
 
 btnD.addEventListener("click", async function () {
-  if (
-    nama.value.length > 7 &&
-    username.value.length > 7 &&
-    pas.value.length > 7 &&
-    alamat.value.length > 7 &&
-    hobi.value.length > 2 &&
-    inputL.value.length > 7
-  ) {
-    const uss = await fetchL();
-    const bool = menyeleksiUser(uss.values);
-    if (!bool) {
-      console.log("haloo");
-      alert("berhasil registrasi");
-      const user = {
-        nama: nama.value,
-        username: username.value,
-        password: pas.value,
-        alamat: alamat.value,
-        hobi: hobi.value,
-        jeniskelamin: inputL.value,
-      };
-      await fetchF(user);
+  try {
+    console.log(username.value);
+    if (
+      nama.value.length > 7 &&
+      username.value.length > 7 &&
+      pas.value.length > 7 &&
+      alamat.value.length > 7 &&
+      hobi.value.length > 2 &&
+      inputL.value.length > 7
+    ) {
+      e.preventDefault();
+      const seleksi = await fetchL();
+      const bool = await menyeleksiUser(seleksi);
+
+      if (!bool) {
+        alert("Username sudah digunakan");
+      } else {
+        const user = {
+          nama: nama.value,
+          username: username.value,
+          password: pas.value,
+          alamat: alamat.value,
+          hobi: hobi.value,
+          jeniskelamin: inputL.value,
+        };
+        await fetchF(user);
+      }
+    } else {
+      alert("Lengkapi seluruh data");
     }
-  } else {
-    alert("Lengkapi seluruh data");
+  } catch (err) {
+    alert(err);
   }
 });
 
@@ -70,7 +77,7 @@ function fetchL() {
   return fetch("http://localhost:3000/semuauser")
     .then((res) => res.json())
     .then((data) => {
-      return data;
+      return data.values;
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -79,12 +86,13 @@ function fetchL() {
 
 function menyeleksiUser(e) {
   for (const element of e) {
-    if (element.username == username.value) {
-      alert("Username sudah digunakan, cari username lain");
-      return true; // Username sudah ada, hentikan pemrosesan
+    if (element.username === username.value) {
+      frm.setAttribute("action", "/daftar");
+      frm.submit();
+      return false;
     }
   }
-  return false; // Username belum ada, lanjutkan pemrosesan
+  alert("Registrasi berhasil");
 }
 
 // ini kode salah yg atas kode berhasil

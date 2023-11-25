@@ -21,7 +21,7 @@ exports.tampilsemuauser = function (req, res) {
 exports.tampilberdasarkanid = function (req, res) {
   let id = req.params.id;
   connection.query(
-    "SELECT * FROM registrasilks WHERE id_user=?",
+    "SELECT * FROM registrasilks WHERE id=?",
     [id],
     function (error, rows, fields) {
       if (error) {
@@ -60,7 +60,7 @@ exports.tambahUser = function (req, res) {
 
 //mengubah data berdasarkan id
 exports.ubahUser = function (req, res) {
-  var id = req.body.id_user;
+  var id = req.body.id;
   var nama = req.body.username;
   var username = req.body.nama;
   var password = req.body.password;
@@ -69,7 +69,7 @@ exports.ubahUser = function (req, res) {
   var jeniskelamin = req.body.jeniskelamin;
 
   connection.query(
-    "UPDATE registrasilks SET nama=?, username=?, password=?, alamat=?, hobi=?, jeniskelamin=? WHERE id_user=?",
+    "UPDATE registrasilks SET nama=?, username=?, password=?, alamat=?, hobi=?, jeniskelamin=? WHERE id=?",
     [nama, username, password, alamat, hobi, jeniskelamin, id],
     function (error, rows, fields) {
       if (error) {
@@ -85,7 +85,7 @@ exports.ubahUser = function (req, res) {
 exports.hapusUser = function (req, res) {
   var id = req.body.id_user;
   connection.query(
-    "DELETE FROM registrasilks WHERE id_user=?",
+    "DELETE FROM registrasilks WHERE id=?",
     [id],
     function (error, rows, fields) {
       if (error) {

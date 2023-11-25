@@ -32,6 +32,7 @@ btnD.addEventListener("click", async function () {
     const uss = await fetchL();
     const bool = menyeleksiUser(uss.values);
     if (!bool) {
+      console.log("haloo");
       alert("berhasil registrasi");
       const user = {
         nama: nama.value,

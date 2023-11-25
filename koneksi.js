@@ -2,10 +2,10 @@ var mysql = require("mysql");
 
 // membuat koneksi database
 const conn = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "S098765l@",
-  database: "dbregistrasi",
+  host: "",
+  user: "",
+  password: "",
+  database: "",
 });
 
 conn.connect((err) => {

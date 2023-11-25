@@ -1,5 +1,4 @@
 var mysql = require("mysql");
-require("dotenv").config();
 
 // membuat koneksi database
 const conn = mysql.createConnection({

@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const port = 3000;
+require("dotenv").config();
 
 // gunakan ejs
 app.set("view engine", "ejs");
